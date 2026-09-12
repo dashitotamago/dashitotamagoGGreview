@@ -721,7 +721,7 @@ async function approve(id){
   try{
     const res = await apiPost("approve", { reviewId: id });
     if(res.error) throw new Error(res.error);
-    r.status = "承認済み";
+    reviews = reviews.filter(x => x.reviewId !== id);
     render();
   }catch(e){
     showCardError(id, e.message || String(e));
