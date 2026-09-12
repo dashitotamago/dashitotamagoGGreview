@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>出汁と卵 - 口コミ返信ダッシュボード</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+
+:root{
+  --ink:#23302B;
+  --ink-soft:#4A554F;
+  --paper:#EDE6D6;
+  --paper-soft:#F6F1E4;
+  --paper-card:#FBF8F0;
+  --gold:#C79A45;
+  --gold-deep:#A87D2F;
+  --broth:#8B5E34;
+  --line: rgba(35,48,43,0.16);
+  --stamp:#B03A2E;
+  --star-empty: rgba(35,48,43,0.18);
+  --err:#B03A2E;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Zen Kaku Gothic New', sans-serif;
+  min-height:100vh;
+  padding:32px 20px 80px;
+}
+
+.wrap{max-width:760px;margin:0 auto;}
+
+.header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:18px;
+  margin-bottom:8px;
+  gap:16px;
+}
+.title-block .eyebrow{
+  font-size:12px;
+  letter-spacing:0.28em;
+  color:var(--broth);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.title-block h1{
+  font-family:'Shippori Mincho', serif;
+  font-weight:800;
+  font-size:30px;
+  margin:0;
+  letter-spacing:0.02em;
+}
+.title-block .sub{
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:6px;
+}
+.stat{
+  text-align:right;
+  font-family:'Shippori Mincho', serif;
+}
+.stat .num{font-size:34px;font-weight:800;line-height:1;}
+.stat .label{font-size:11px;color:var(--ink-soft);letter-spacing:0.1em;margin-top:4px;}
+
+.notice{
+  font-size:12.5px;
+  color:var(--ink-soft);
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  border-radius:3px;
+  padding:10px 14px;
+  margin:18px 0 18px;
+  line-height:1.6;
+}
+
+/* settings panel */
+.settings{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:16px 20px 18px;
+  margin-bottom:24px;
+}
+.settings-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  user-select:none;
+}
+.settings-head .t{
+  font-family:'Shippori Mincho', serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.settings-head .save-state{
+  font-size:11px;
+  color:var(--gold-deep);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.settings-head .save-state.show{opacity:1;}
+.settings-body{margin-top:14px;display:grid;gap:14px;}
+.settings-body.hidden{display:none;}
+.field label{
+  display:block;
+  font-size:11px;
+  color:var(--broth);
+  font-weight:700;
+  letter-spacing:0.08em;
+  margin-bottom:6px;
+}
+.field textarea, .field input{
+  width:100%;
+  font-family:inherit;
+  font-size:13px;
+  line-height:1.7;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:3px;
+  background:var(--paper-soft);
+  color:var(--ink);
+}
+.field textarea{min-height:56px;resize:vertical;}
+.caret{font-size:12px;color:var(--ink-soft);transition:transform 0.2s;}
+.caret.open{transform:rotate(90deg);}
+
+.notes-hint{
+  font-size:12px;
+  color:var(--ink-soft);
+  line-height:1.6;
+}
+.notes-empty{
+  font-size:12.5px;
+  color:var(--ink-soft);
+  padding:10px 0;
+}
+.note-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  background:var(--paper-soft);
+  border:1px solid var(--line);
+  border-radius:3px;
+  padding:8px 10px;
+  margin-bottom:6px;
+  font-size:13px;
+}
+.note-text{flex:1;line-height:1.6;}
+.note-del{
+  background:none;
+  border:none;
+  color:var(--stamp);
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
+  padding:0 4px;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:22px;
+  flex-wrap:wrap;
+}
+.btn-ghost{
+  background:none;
+  border:1px solid var(--ink);
+  color:var(--ink);
+  font-family:inherit;
+  font-size:12.5px;
+  padding:8px 14px;
+  border-radius:3px;
+  cursor:pointer;
+  letter-spacing:0.03em;
+}
+.btn-ghost:hover{background:var(--ink);color:var(--paper-soft);}
+
+.ticket{
+  position:relative;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  margin-bottom:22px;
+  overflow:hidden;
+  box-shadow:0 1px 0 var(--line);
+}
+.ticket::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:repeating-linear-gradient(90deg,var(--gold) 0 10px, transparent 10px 18px);
+  opacity:0.7;
+}
+.ticket-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:18px 22px 12px;
+  gap:12px;
+}
+.who{display:flex;flex-direction:column;gap:4px;}
+.who .name{font-weight:700;font-size:15px;}
+.who .meta{font-size:11.5px;color:var(--ink-soft);letter-spacing:0.02em;}
+.stars{font-size:15px;letter-spacing:2px;color:var(--gold-deep);}
+.stars .empty{color:var(--star-empty);}
+
+.status-badge{
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:0.08em;
+  padding:4px 10px;
+  border-radius:20px;
+  white-space:nowrap;
+  border:1px solid currentColor;
+}
+.status-未対応{color:var(--ink-soft);}
+.status-下書き中{color:var(--broth);}
+.status-承認済み{color:var(--stamp);}
+
+.review-body{
+  padding:0 22px 16px;
+  font-size:14px;
+  line-height:1.85;
+  color:var(--ink);
+  border-bottom:1px dashed var(--line);
+}
+
+.draft-area{
+  padding:18px 22px 8px;
+}
+.draft-area .lbl{
+  font-size:11px;
+  letter-spacing:0.12em;
+  color:var(--broth);
+  font-weight:700;
+  margin-bottom:8px;
+}
+textarea{
+  width:100%;
+  min-height:110px;
+  font-family:inherit;
+  font-size:13.5px;
+  line-height:1.8;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:3px;
+  background:var(--paper-soft);
+  color:var(--ink);
+  resize:vertical;
+}
+textarea:disabled{background:#F1EDE0;color:var(--ink-soft);}
+textarea:focus{outline:none;border-color:var(--gold-deep);}
+
+.revise-block{
+  padding:4px 22px 20px;
+}
+.revise-block .lbl{
+  font-size:11px;
+  letter-spacing:0.12em;
+  color:var(--broth);
+  font-weight:700;
+  margin-bottom:8px;
+}
+.revise-row{display:flex;gap:8px;align-items:flex-start;}
+.revise-row textarea{min-height:52px;font-size:13px;}
+.revise-row input[type="text"]{
+  flex:1;
+  font-family:inherit;
+  font-size:13px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:3px;
+  background:var(--paper-soft);
+  color:var(--ink);
+}
+.revise-row input[type="text"]:focus{outline:none;border-color:var(--gold-deep);}
+
+.error-msg{
+  font-size:12px;
+  color:var(--err);
+  margin-top:8px;
+  line-height:1.6;
+}
+.notice-msg{
+  font-size:12px;
+  color:var(--broth);
+  margin-top:8px;
+  line-height:1.6;
+}
+
+.row-btns{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.btn-primary{
+  background:var(--ink);
+  color:var(--paper-soft);
+  border:none;
+  font-family:inherit;
+  font-size:12.5px;
+  font-weight:700;
+  padding:9px 16px;
+  border-radius:3px;
+  cursor:pointer;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+}
+.btn-primary:hover{background:var(--broth);}
+.btn-primary:disabled{opacity:0.4;cursor:default;}
+.btn-approve{background:var(--gold-deep);}
+.btn-approve:hover{background:var(--gold);}
+.btn-text{
+  background:none;
+  border:none;
+  color:var(--ink-soft);
+  font-family:inherit;
+  font-size:12px;
+  cursor:pointer;
+  text-decoration:underline;
+}
+.spin{
+  display:inline-block;
+  width:11px;height:11px;
+  border:2px solid rgba(255,255,255,0.4);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:sp 0.7s linear infinite;
+  margin-right:6px;
+  vertical-align:-1px;
+}
+@keyframes sp{to{transform:rotate(360deg);}}
+
+.stamp{
+  position:absolute;
+  right:22px;
+  bottom:18px;
+  width:56px;height:56px;
+  border:3px solid var(--stamp);
+  border-radius:50%;
+  color:var(--stamp);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Shippori Mincho', serif;
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:0.15em;
+  writing-mode:vertical-rl;
+  transform:rotate(-8deg) scale(1);
+  opacity:0.92;
+  animation:stampIn 0.35s cubic-bezier(.2,1.4,.4,1);
+  pointer-events:none;
+  background:rgba(176,58,46,0.03);
+}
+@keyframes stampIn{
+  0%{transform:rotate(-8deg) scale(2.4);opacity:0;}
+  60%{opacity:1;}
+  100%{transform:rotate(-8deg) scale(1);opacity:0.92;}
+}
+
+.empty-state{
+  font-size:13px;
+  color:var(--ink-soft);
+  padding:20px 0;
+  text-align:center;
+  border:1px dashed var(--line);
+  border-radius:3px;
+}
+
+.footer-note{
+  text-align:center;
+  font-size:11px;
+  color:var(--ink-soft);
+  margin-top:36px;
+  letter-spacing:0.04em;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="title-block">
+      <div class="eyebrow">DASHI TO TAMAGO</div>
+      <h1>口コミ返信ダッシュボード</h1>
+      <div class="sub">出汁と卵 / Googleマップの口コミ確認・返信案作成</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="pendingCount">0</div>
+      <div class="label">未対応</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    GAS経由でGoogleマップの実際の口コミを取得・表示しています。「承認して確定」を押すと、実際にGoogleビジネスプロフィールへ返信が投稿されます（取り消せません）。内容をよく確認してから承認してください。
+  </div>
+
+  <div class="settings">
+    <div class="settings-head" onclick="toggleSettings()">
+      <div class="t">返信テンプレート設定（冒頭・末尾の文章）</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="save-state" id="saveState">保存しました</span>
+        <span class="caret" id="settingsCaret">▶</span>
+      </div>
+    </div>
+    <div class="settings-body" id="settingsBody">
+      <div class="field">
+        <label>冒頭の文章</label>
+        <textarea id="openingInput" oninput="onSettingsEdit()" placeholder="例：いつも出汁と卵をご利用いただき、誠にありがとうございます。"></textarea>
+      </div>
+      <div class="field">
+        <label>末尾の文章（署名など）</label>
+        <textarea id="closingInput" oninput="onSettingsEdit()" placeholder="例：またのご来店を心よりお待ちしております。出汁と卵"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings">
+    <div class="settings-head" onclick="toggleNotes()">
+      <div class="t">学習メモ（過去の修正指示から反映される注意点）</div>
+      <span class="caret" id="notesCaret">▶</span>
+    </div>
+    <div class="settings-body" id="notesBody">
+      <div class="notes-hint">修正指示を使うたびに、その内容が自動でここに追加され、以後すべての返信案の生成に反映されます。不要になったメモは×で削除できます。</div>
+      <div id="learnedNotesList"></div>
+      <div class="revise-row">
+        <input type="text" id="manualNoteInput" placeholder="例：語尾は「〜です・ます」で統一する">
+        <button class="btn-ghost" onclick="addManualNote()">+ 追加</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn-ghost" id="fetchNowBtn" onclick="fetchNow()">今すぐ口コミを取得</button>
+    <span id="lastLoadInfo" class="notes-hint" style="align-self:center;"></span>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="footer-note">出汁と卵 内部管理ツール（テスト版）</div>
+</div>
+
+<script>
+// ▼▼▼ デプロイ後、あなたのGASウェブアプリのURLに書き換えてください ▼▼▼
+const GAS_API_URL = "ここにGASのウェブアプリURLを貼り付け";
+// ▲▲▲ 例: https://script.google.com/macros/s/xxxxxxxx/exec ▲▲▲
+
+let reviews = [];
+let settings = { opening: "", closing: "" };
+let learnedNotes = [];
+
+async function apiGet(action, params){
+  const url = new URL(GAS_API_URL);
+  url.searchParams.set("action", action);
+  Object.keys(params || {}).forEach(k => url.searchParams.set(k, params[k]));
+  const res = await fetch(url.toString());
+  return res.json();
+}
+
+async function apiPost(action, payload){
+  const res = await fetch(GAS_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" }, // プリフライトを避けるため text/plain で送信
+    body: JSON.stringify({ action, ...(payload || {}) })
+  });
+  return res.json();
+}
+
+async function loadAll(){
+  if(GAS_API_URL.includes("ここに")){
+    document.getElementById("list").innerHTML =
+      '<div class="empty-state">GAS_API_URL が未設定です。デプロイしたウェブアプリのURLをコードに設定してください。</div>';
+    return;
+  }
+  try{
+    const settingsRes = await apiGet("settings");
+    settings = settingsRes.settings || { opening:"", closing:"" };
+    learnedNotes = settingsRes.notes || [];
+    document.getElementById("openingInput").value = settings.opening || "";
+    document.getElementById("closingInput").value = settings.closing || "";
+    renderLearnedNotes();
+
+    const listRes = await apiGet("list");
+    reviews = listRes.reviews || [];
+    document.getElementById("lastLoadInfo").textContent =
+      "最終読み込み: " + new Date().toLocaleString("ja-JP");
+    render();
+  }catch(e){
+    console.error(e);
+    document.getElementById("list").innerHTML =
+      '<div class="empty-state">データの読み込みに失敗しました。GASのデプロイ設定（アクセス権限など）を確認してください。</div>';
+  }
+}
+
+function renderLearnedNotes(){
+  const box = document.getElementById("learnedNotesList");
+  if(!box) return;
+  if(learnedNotes.length === 0){
+    box.innerHTML = '<div class="notes-empty">まだ学習したメモはありません。修正指示を使うと自動的にここに追加されます。</div>';
+    return;
+  }
+  box.innerHTML = learnedNotes.map((n, i) => `
+    <div class="note-item">
+      <span class="note-text">${escapeHtml(n)}</span>
+      <button class="note-del" onclick="deleteLearnedNote(${i})" title="削除">×</button>
+    </div>
+  `).join("");
+}
+
+async function deleteLearnedNote(i){
+  const res = await apiPost("deleteNote", { index: i });
+  learnedNotes = res.notes || [];
+  renderLearnedNotes();
+}
+
+async function addManualNote(){
+  const input = document.getElementById("manualNoteInput");
+  const val = input.value.trim();
+  if(!val) return;
+  const res = await apiPost("addNote", { note: val });
+  learnedNotes = res.notes || [];
+  input.value = "";
+  renderLearnedNotes();
+}
+
+let settingsSaveTimer = null;
+function onSettingsEdit(){
+  settings.opening = document.getElementById("openingInput").value;
+  settings.closing = document.getElementById("closingInput").value;
+  clearTimeout(settingsSaveTimer);
+  settingsSaveTimer = setTimeout(async () => {
+    try{
+      await apiPost("saveSettings", settings);
+      const el = document.getElementById("saveState");
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1500);
+    }catch(e){
+      console.error("設定の保存に失敗しました", e);
+    }
+  }, 600);
+}
+
+function toggleSettings(){
+  const body = document.getElementById("settingsBody");
+  const caret = document.getElementById("settingsCaret");
+  body.classList.toggle("hidden");
+  caret.classList.toggle("open");
+}
+
+function toggleNotes(){
+  const body = document.getElementById("notesBody");
+  const caret = document.getElementById("notesCaret");
+  body.classList.toggle("hidden");
+  caret.classList.toggle("open");
+}
+
+function starLine(rating){
+  let out = "";
+  for(let i=0;i<5;i++){
+    out += i < rating ? "★" : '<span class="empty">★</span>';
+  }
+  return out;
+}
+
+function render(){
+  const list = document.getElementById("list");
+  if(reviews.length === 0){
+    list.innerHTML = '<div class="empty-state">口コミはまだありません</div>';
+  } else {
+    list.innerHTML = reviews.map(r => cardHtml(r)).join("");
+  }
+  const pending = reviews.filter(r => r.status !== "承認済み").length;
+  document.getElementById("pendingCount").textContent = pending;
+}
+
+function cardHtml(r){
+  const approved = r.status === "承認済み";
+  const hasDraft = r.draft && String(r.draft).trim().length > 0;
+  return `
+  <div class="ticket" id="ticket-${r.reviewId}">
+    <div class="ticket-head">
+      <div class="who">
+        <div class="name">${escapeHtml(r.name)}</div>
+        <div class="meta">${escapeHtml(String(r.createTime || "").slice(0,10))} ・ Googleマップの口コミ</div>
+        <div class="stars">${starLine(r.rating)}</div>
+      </div>
+      <div class="status-badge status-${r.status}">${r.status}</div>
+    </div>
+    <div class="review-body">${escapeHtml(r.text)}</div>
+    <div class="draft-area">
+      <div class="lbl">返信案（自由に編集できます）</div>
+      <textarea id="draft-${r.reviewId}" ${approved ? "disabled" : ""} oninput="onEdit('${r.reviewId}', this.value)" placeholder="「返信案を生成」を押すと下書きが作成されます">${escapeHtml(r.draft || "")}</textarea>
+    </div>
+    ${approved ? "" : `
+    <div class="revise-block">
+      <div class="lbl">修正指示（AIに直してほしい点を書いて再生成）</div>
+      <div class="revise-row">
+        <textarea id="revise-${r.reviewId}" oninput="onReviseNoteEdit('${r.reviewId}', this.value)" placeholder="例：もう少しカジュアルに／お詫びをもっと丁寧に、など">${escapeHtml(r.reviseNote || "")}</textarea>
+        <button class="btn-primary" id="revise-btn-${r.reviewId}" onclick="reviseDraft('${r.reviewId}')" ${hasDraft ? "" : "disabled"}>この指示で修正</button>
+      </div>
+    </div>
+    `}
+    <div class="draft-area" style="padding-top:0;">
+      <div class="row-btns">
+        ${approved ? "" : `
+          <button class="btn-primary" id="gen-${r.reviewId}" onclick="generateDraft('${r.reviewId}')">
+            ${hasDraft ? "はじめから生成し直す" : "返信案を生成"}
+          </button>
+          <button class="btn-primary btn-approve" onclick="approve('${r.reviewId}')" ${hasDraft ? "" : "disabled"}>
+            承認して確定（Googleへ投稿）
+          </button>
+        `}
+        ${approved ? '<span class="notes-hint">投稿日時: '+escapeHtml(String(r.repliedAt||""))+'</span>' : ""}
+      </div>
+      <div class="error-msg" id="err-${r.reviewId}"></div>
+    </div>
+    ${approved ? '<div class="stamp">承認済</div>' : ""}
+  </div>`;
+}
+
+function escapeHtml(s){
+  return (s == null ? "" : String(s)).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+let draftSaveTimers = {};
+function onEdit(id, value){
+  const r = reviews.find(x => x.reviewId === id);
+  if(!r) return;
+  r.draft = value;
+  if(r.status === "未対応"){
+    r.status = "下書き中";
+    const badge = document.querySelector(`#ticket-${id} .status-badge`);
+    if(badge){ badge.textContent = r.status; badge.className = `status-badge status-${r.status}`; }
+  }
+  const approveBtn = document.querySelector(`#ticket-${id} .btn-approve`);
+  if(approveBtn){ approveBtn.disabled = !(value && value.trim().length > 0); }
+  const reviseBtn = document.getElementById(`revise-btn-${id}`);
+  if(reviseBtn){ reviseBtn.disabled = !(value && value.trim().length > 0); }
+
+  clearTimeout(draftSaveTimers[id]);
+  draftSaveTimers[id] = setTimeout(() => {
+    apiPost("updateDraft", { reviewId: id, draft: value }).catch(e => console.error(e));
+  }, 700);
+}
+
+function onReviseNoteEdit(id, value){
+  const r = reviews.find(x => x.reviewId === id);
+  if(r) r.reviseNote = value;
+}
+
+function showCardError(id, msg){
+  const el = document.getElementById(`err-${id}`);
+  if(el) el.textContent = msg ? "エラー：" + msg : "";
+}
+
+async function generateDraft(id){
+  const btn = document.getElementById(`gen-${id}`);
+  const originalLabel = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>作成中...';
+  showCardError(id, "");
+  try{
+    const res = await apiPost("generateDraft", { reviewId: id });
+    if(res.error) throw new Error(res.error);
+    const r = reviews.find(x => x.reviewId === id);
+    if(r){ r.draft = res.draft; if(r.status === "未対応") r.status = "下書き中"; }
+    render();
+  }catch(e){
+    showCardError(id, e.message || String(e));
+  }finally{
+    btn.disabled = false;
+    btn.innerHTML = originalLabel;
+  }
+}
+
+async function reviseDraft(id){
+  const r = reviews.find(x => x.reviewId === id);
+  if(!r) return;
+  const btn = document.getElementById(`revise-btn-${id}`);
+  const originalLabel = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>修正中...';
+  showCardError(id, "");
+  try{
+    const res = await apiPost("reviseDraft", { reviewId: id, instruction: r.reviseNote || "" });
+    if(res.error) throw new Error(res.error);
+    r.draft = res.draft;
+    if(r.status === "未対応") r.status = "下書き中";
+    const notesRes = await apiGet("settings");
+    learnedNotes = notesRes.notes || [];
+    renderLearnedNotes();
+    render();
+  }catch(e){
+    showCardError(id, e.message || String(e));
+  }finally{
+    btn.disabled = false;
+    btn.innerHTML = originalLabel;
+  }
+}
+
+async function approve(id){
+  const r = reviews.find(x => x.reviewId === id);
+  if(!r || !r.draft || !r.draft.trim()) return;
+  if(!confirm("この内容でGoogleマップに実際に返信を投稿します。よろしいですか？（取り消せません）")) return;
+  showCardError(id, "");
+  try{
+    const res = await apiPost("approve", { reviewId: id });
+    if(res.error) throw new Error(res.error);
+    r.status = "承認済み";
+    render();
+  }catch(e){
+    showCardError(id, e.message || String(e));
+  }
+}
+
+async function fetchNow(){
+  const btn = document.getElementById("fetchNowBtn");
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "取得中...";
+  try{
+    const res = await apiGet("fetchNow");
+    reviews = res.reviews || [];
+    document.getElementById("lastLoadInfo").textContent =
+      "最終読み込み: " + new Date().toLocaleString("ja-JP");
+    render();
+  }catch(e){
+    alert("口コミの取得に失敗しました: " + (e.message || e));
+  }finally{
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+}
+
+loadAll();
+</script>
+</body>
+</html>
