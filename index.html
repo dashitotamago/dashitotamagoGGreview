@@ -448,6 +448,8 @@ textarea:focus{outline:none;border-color:var(--gold-deep);}
     <span id="lastLoadInfo" class="notes-hint" style="align-self:center;"></span>
   </div>
 
+  <div id="authBanner" class="error-msg" style="display:none;margin-bottom:16px;"></div>
+
   <div id="list"></div>
 
   <div class="footer-note">出汁と卵 内部管理ツール（テスト版）</div>
@@ -479,6 +481,25 @@ async function apiPost(action, payload){
   return res.json();
 }
 
+function showAuthBanner(authUrl){
+  const el = document.getElementById("authBanner");
+  el.innerHTML = `Googleの認証が切れています。<a href="${authUrl}" target="_blank" rel="noopener" style="color:var(--stamp);font-weight:700;">こちらをクリックして再認証</a>してから、もう一度お試しください。`;
+  el.style.display = "block";
+}
+
+function hideAuthBanner(){
+  document.getElementById("authBanner").style.display = "none";
+}
+
+async function checkAuthStatus(){
+  try{
+    const res = await apiGet("authStatus");
+    if(res.ok){ hideAuthBanner(); } else if(res.authUrl){ showAuthBanner(res.authUrl); }
+  }catch(e){
+    console.error(e);
+  }
+}
+
 async function loadAll(){
   if(GAS_API_URL.includes("ここに")){
     document.getElementById("list").innerHTML =
@@ -486,6 +507,7 @@ async function loadAll(){
     return;
   }
   try{
+    checkAuthStatus();
     const settingsRes = await apiGet("settings");
     settings = settingsRes.settings || { opening:"", closing:"" };
     learnedNotes = settingsRes.notes || [];
@@ -720,6 +742,10 @@ async function approve(id){
   showCardError(id, "");
   try{
     const res = await apiPost("approve", { reviewId: id });
+    if(res.authUrl){
+      showAuthBanner(res.authUrl);
+      return;
+    }
     if(res.error) throw new Error(res.error);
     reviews = reviews.filter(x => x.reviewId !== id);
     render();
@@ -735,6 +761,12 @@ async function fetchNow(){
   btn.textContent = "取得中...";
   try{
     const res = await apiGet("fetchNow");
+    if(res.authUrl){
+      showAuthBanner(res.authUrl);
+      return;
+    }
+    if(res.error) throw new Error(res.error);
+    hideAuthBanner();
     reviews = res.reviews || [];
     document.getElementById("lastLoadInfo").textContent =
       "最終読み込み: " + new Date().toLocaleString("ja-JP");
