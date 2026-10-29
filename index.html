@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>出汁と卵 - 口コミ返信ダッシュボード</title>
+<title>出汁と卵 - 口コミ・店舗投稿</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
 
@@ -387,6 +387,106 @@ textarea:focus{outline:none;border-color:var(--gold-deep);}
   margin-top:36px;
   letter-spacing:0.04em;
 }
+
+/* ===== タブ ===== */
+.tabs{display:flex;border-bottom:1px solid var(--line);margin:16px 0 18px;}
+.tab{
+  flex:1;background:none;border:none;border-bottom:3px solid transparent;
+  font-family:'Shippori Mincho', serif;font-weight:700;font-size:15px;letter-spacing:0.04em;
+  padding:12px 8px;color:var(--ink-soft);cursor:pointer;
+}
+.tab.active{color:var(--ink);border-bottom-color:var(--gold-deep);}
+.tab:focus-visible, .day-btn:focus-visible, .btn-primary:focus-visible, .btn-ghost:focus-visible{
+  outline:2px solid var(--gold-deep);outline-offset:2px;
+}
+
+/* ===== 店舗投稿（MEO） ===== */
+.meo-next{
+  background:var(--ink);color:var(--paper-soft);border-radius:4px;
+  padding:16px 20px;margin-bottom:18px;line-height:1.7;
+}
+.meo-next .big{display:block;font-family:'Shippori Mincho', serif;font-size:19px;font-weight:800;margin-bottom:2px;}
+.meo-next .sub{display:block;font-size:12px;opacity:0.82;}
+.meo-next.warn{background:var(--stamp);}
+
+.mfield .cap{font-size:11px;color:var(--broth);font-weight:700;letter-spacing:0.08em;margin-bottom:6px;}
+.mfield textarea, .mfield input[type="text"], .mfield select{
+  width:100%;font-family:inherit;font-size:13px;line-height:1.7;padding:10px 12px;
+  border:1px solid var(--line);border-radius:3px;background:var(--paper-soft);color:var(--ink);
+}
+.mfield select{width:auto;min-width:110px;}
+.mfield input[type="text"]:focus, .mfield select:focus{outline:none;border-color:var(--gold-deep);}
+.revise-row input[type="text"]{min-width:0;}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{
+  display:inline-flex;align-items:center;gap:4px;background:var(--paper-soft);
+  border:1px solid var(--gold-deep);border-radius:20px;padding:4px 4px 4px 12px;font-size:13px;
+}
+.chip button{background:none;border:none;color:var(--stamp);font-size:16px;line-height:1;cursor:pointer;padding:2px 8px;}
+.chips-empty{font-size:12.5px;color:var(--ink-soft);}
+
+.day-row{display:flex;gap:6px;flex-wrap:wrap;}
+.day-btn{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--ink);background:none;
+  font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;
+}
+.day-btn.on{background:var(--ink);color:var(--paper-soft);}
+
+.radio-opt{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.7;margin-bottom:6px;cursor:pointer;}
+.radio-opt input{margin-top:5px;flex:none;}
+
+.upload-box{
+  border:1px dashed var(--gold-deep);border-radius:4px;padding:16px;
+  text-align:center;background:var(--paper-soft);
+}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:12px;}
+.progress > div{height:100%;width:0;background:var(--gold-deep);transition:width 0.2s;}
+
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;}
+.photo-card{
+  background:var(--paper-soft);border:1px solid var(--line);border-radius:4px;
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.photo-card.off img{opacity:0.45;}
+.photo-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--line);}
+.pc-body{padding:8px 10px 10px;display:flex;flex-direction:column;gap:6px;}
+.photo-card textarea{min-height:84px;font-size:12px;line-height:1.6;padding:8px 10px;}
+.photo-card input[type="text"]{
+  width:100%;font-family:inherit;font-size:12px;padding:7px 10px;
+  border:1px solid var(--line);border-radius:3px;background:var(--paper-card);color:var(--ink);
+}
+.pc-row{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--ink-soft);gap:6px;}
+.pc-use{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.pc-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+.post-card{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;}
+.post-card img{width:200px;max-width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;background:var(--line);align-self:flex-start;}
+.pc-text{flex:1;min-width:250px;}
+.pc-text textarea{min-height:240px;}
+.charcount{font-size:11px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+.charcount.over{color:var(--err);font-weight:700;}
+
+.hist-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);}
+.hist-item:first-child{padding-top:0;}
+.hist-item:last-child{border-bottom:none;padding-bottom:0;}
+.hist-item img, .hist-item .noimg{width:64px;height:64px;object-fit:cover;border-radius:3px;flex:none;background:var(--line);}
+.hist-main{flex:1;min-width:0;}
+.hist-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px;}
+.hist-text{font-size:12.5px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.hist-main summary{cursor:pointer;}
+
+.status-投稿済み{color:var(--ok, #3E6B4F);}
+.status-承認待ち{color:var(--gold-deep);}
+.status-失敗{color:var(--stamp);}
+.status-破棄{color:var(--ink-soft);}
+
+@media (max-width:520px){
+  body{padding:20px 14px 64px;}
+  .title-block h1{font-size:24px;}
+  .photo-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .post-card img{width:100%;}
+}
 </style>
 </head>
 <body>
@@ -395,15 +495,23 @@ textarea:focus{outline:none;border-color:var(--gold-deep);}
   <div class="header">
     <div class="title-block">
       <div class="eyebrow">DASHI TO TAMAGO</div>
-      <h1>口コミ返信ダッシュボード</h1>
-      <div class="sub">出汁と卵 / Googleマップの口コミ確認・返信案作成</div>
+      <h1>口コミ・店舗投稿</h1>
+      <div class="sub">出汁と卵 / Googleマップの口コミ返信と店舗投稿（MEO）</div>
     </div>
     <div class="stat">
       <div class="num" id="pendingCount">0</div>
-      <div class="label">未対応</div>
+      <div class="label" id="statLabel">未対応</div>
     </div>
   </div>
 
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tabBtn-reviews" role="tab" aria-selected="true" onclick="switchTab('reviews')">口コミ返信</button>
+    <button class="tab" id="tabBtn-meo" role="tab" aria-selected="false" onclick="switchTab('meo')">店舗投稿（MEO）</button>
+  </div>
+
+  <div id="authBanner" class="error-msg" style="display:none;margin-bottom:16px;"></div>
+
+  <div id="tab-reviews">
   <div class="notice">
     GAS経由でGoogleマップの実際の口コミを取得・表示しています。「承認して確定」を押すと、実際にGoogleビジネスプロフィールへ返信が投稿されます（取り消せません）。内容をよく確認してから承認してください。
   </div>
@@ -448,9 +556,106 @@ textarea:focus{outline:none;border-color:var(--gold-deep);}
     <span id="lastLoadInfo" class="notes-hint" style="align-self:center;"></span>
   </div>
 
-  <div id="authBanner" class="error-msg" style="display:none;margin-bottom:16px;"></div>
-
   <div id="list"></div>
+  </div><!-- /tab-reviews -->
+
+  <div id="tab-meo" style="display:none;">
+    <div class="notice">
+      決めた曜日に、AIが投稿文（日本語・英語・中国語・韓国語を1つにまとめたもの）を作り、登録した写真の中から内容に合う1枚を選んで、Googleマップの「店舗投稿」に自動で投稿します。指定ワードは毎回の投稿に必ず入ります。
+    </div>
+    <div id="meoLoadError" class="error-msg" style="margin-bottom:12px;"></div>
+
+    <div class="meo-next" id="meoNext">読み込み中…</div>
+
+    <div class="settings" id="meoPendingBox" style="display:none;">
+      <div class="settings-head" style="cursor:default;"><div class="t">承認待ちの投稿</div></div>
+      <div class="settings-body" id="meoPending"></div>
+    </div>
+
+    <div class="settings">
+      <div class="settings-head" onclick="toggleBlock('meoSettingsBody','meoSettingsCaret')">
+        <div class="t">投稿の設定</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="save-state" id="meoSaveState">保存しました</span>
+          <span class="caret open" id="meoSettingsCaret">▶</span>
+        </div>
+      </div>
+      <div class="settings-body" id="meoSettingsBody">
+        <div class="mfield">
+          <div class="cap">指定ワード（毎回の投稿に必ず入れる言葉）</div>
+          <div class="chips" id="meoKeywordChips"></div>
+          <div class="revise-row" style="margin-top:8px;">
+            <input type="text" id="meoKeywordInput" placeholder="例：常滑 ランチ（「、」で区切ると複数まとめて追加）" onkeydown="if(event.key==='Enter'){event.preventDefault();meoAddKeyword();}">
+            <button class="btn-ghost" onclick="meoAddKeyword()">+ 追加</button>
+          </div>
+          <div class="notes-hint" style="margin-top:6px;">3〜5個くらいが、自然な文章になりやすい数です。</div>
+        </div>
+
+        <div class="mfield">
+          <div class="cap">投稿する曜日</div>
+          <div class="day-row" id="meoDays"></div>
+          <div class="notes-hint" id="meoDaysHint" style="margin-top:6px;"></div>
+        </div>
+
+        <div class="mfield">
+          <div class="cap">投稿する時刻</div>
+          <select id="meoHour" onchange="meoSettingsChanged()" aria-label="投稿する時刻"></select>
+          <span class="notes-hint" style="margin-left:8px;">この時刻から数時間のあいだに投稿されます（数十分ずれることがあります）</span>
+        </div>
+
+        <div class="mfield">
+          <div class="cap">投稿のしかた</div>
+          <label class="radio-opt"><input type="radio" name="meoMode" value="auto" onchange="meoSettingsChanged()"><span>確認なしで自動投稿する</span></label>
+          <label class="radio-opt"><input type="radio" name="meoMode" value="review" onchange="meoSettingsChanged()"><span>下書きを作って、承認してから投稿する（メールでお知らせします）</span></label>
+        </div>
+
+        <div class="mfield">
+          <div class="cap">併記する言語（1行に1言語。上から順に並びます）</div>
+          <textarea id="meoLanguages" oninput="meoSettingsChanged()" style="min-height:96px;"></textarea>
+        </div>
+
+        <div class="mfield">
+          <div class="cap">お店のメモ（AIが投稿文を書くときの前提）</div>
+          <textarea id="meoShopNote" oninput="meoSettingsChanged()" style="min-height:96px;" placeholder="例：出汁巻き卵が看板。常滑やきもの散歩道の近く。"></textarea>
+          <div class="notes-hint" style="margin-top:6px;">ここと写真の説明に書いていない価格・営業時間・メニュー名は、投稿文に書かれません。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings">
+      <div class="settings-head" onclick="toggleBlock('meoPhotoBody','meoPhotoCaret')">
+        <div class="t" id="meoPhotoTitle">写真ライブラリ</div>
+        <span class="caret open" id="meoPhotoCaret">▶</span>
+      </div>
+      <div class="settings-body" id="meoPhotoBody">
+        <div class="notes-hint">40枚前後の写真を登録しておくと、AIが投稿文に合う写真を選びます。登録するとAIが写真の内容を説明文にします。料理名などが違っていたら、説明を直してください（直した内容が写真選びに使われます）。</div>
+        <div class="upload-box">
+          <button class="btn-primary" onclick="document.getElementById('meoFileInput').click()">写真を追加（まとめて選べます）</button>
+          <input type="file" id="meoFileInput" accept="image/*" multiple style="display:none;" onchange="meoUploadFiles(this.files)">
+          <div class="progress" id="meoProg" style="display:none;"><div id="meoProgBar"></div></div>
+          <div class="notes-hint" id="meoUploadStatus" aria-live="polite" style="margin-top:8px;"></div>
+          <div class="error-msg" id="meoUploadErrors"></div>
+        </div>
+        <div class="photo-grid" id="meoPhotoGrid"></div>
+      </div>
+    </div>
+
+    <div class="settings">
+      <div class="settings-head" style="cursor:default;"><div class="t">投稿文をためしに作る</div></div>
+      <div class="settings-body">
+        <div class="notes-hint">上の設定どおりに、投稿文と写真を1つ作ります。作っただけではまだ投稿されません。内容を直して「この内容で今すぐ投稿」を押すと、実際にGoogleマップへ投稿されます。</div>
+        <div class="row-btns" style="margin-top:0;">
+          <button class="btn-primary" id="meoPreviewBtn" onclick="meoPreview()">投稿文を作る</button>
+        </div>
+        <div id="meoPreviewArea"></div>
+      </div>
+    </div>
+
+    <div class="settings">
+      <div class="settings-head" style="cursor:default;"><div class="t">投稿の履歴</div></div>
+      <div class="settings-body" id="meoHistory"></div>
+    </div>
+  </div><!-- /tab-meo -->
 
   <div class="footer-note">出汁と卵 内部管理ツール（テスト版）</div>
 </div>
@@ -464,21 +669,45 @@ let reviews = [];
 let settings = { opening: "", closing: "" };
 let learnedNotes = [];
 
+// 管理用パスワード（GAS側で ACCESS_KEY を設定した場合だけ使われます）
+function getAccessKey(){
+  try{ return localStorage.getItem("dt_access_key") || ""; }catch(e){ return ""; }
+}
+function setAccessKey(k){
+  try{ localStorage.setItem("dt_access_key", k); }catch(e){}
+}
+async function withKey(fn){
+  let res = await fn(getAccessKey());
+  if(res && res.needKey){
+    const k = (prompt("管理用パスワードを入力してください") || "").trim();
+    if(!k) return res;
+    setAccessKey(k);
+    res = await fn(k);
+    if(res && res.needKey) setAccessKey("");
+  }
+  return res;
+}
+
 async function apiGet(action, params){
-  const url = new URL(GAS_API_URL);
-  url.searchParams.set("action", action);
-  Object.keys(params || {}).forEach(k => url.searchParams.set(k, params[k]));
-  const res = await fetch(url.toString());
-  return res.json();
+  return withKey(async (key) => {
+    const url = new URL(GAS_API_URL);
+    url.searchParams.set("action", action);
+    if(key) url.searchParams.set("key", key);
+    Object.keys(params || {}).forEach(k => url.searchParams.set(k, params[k]));
+    const res = await fetch(url.toString());
+    return res.json();
+  });
 }
 
 async function apiPost(action, payload){
-  const res = await fetch(GAS_API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" }, // プリフライトを避けるため text/plain で送信
-    body: JSON.stringify({ action, ...(payload || {}) })
+  return withKey(async (key) => {
+    const res = await fetch(GAS_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, // プリフライトを避けるため text/plain で送信
+      body: JSON.stringify({ action, key, ...(payload || {}) })
+    });
+    return res.json();
   });
-  return res.json();
 }
 
 function showAuthBanner(authUrl){
@@ -604,8 +833,7 @@ function render(){
   } else {
     list.innerHTML = reviews.map(r => cardHtml(r)).join("");
   }
-  const pending = reviews.filter(r => r.status !== "承認済み").length;
-  document.getElementById("pendingCount").textContent = pending;
+  updateStat();
 }
 
 function cardHtml(r){
@@ -777,6 +1005,555 @@ async function fetchNow(){
     btn.disabled = false;
     btn.textContent = original;
   }
+}
+
+// =====================================================================
+// 店舗投稿（MEO）
+// =====================================================================
+const DAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
+const DAY_NAMES = ["日", "月", "火", "水", "木", "金", "土"];
+const POST_LIMIT = 1500;
+
+let currentTab = "reviews";
+let meo = {
+  loaded: false,
+  settings: { keywords: [], days: [1, 3, 5, 0], hour: 11, mode: "auto", languages: [], shopNote: "" },
+  photos: [],
+  posts: []
+};
+let meoPreviewData = null;
+let meoSaveTimer = null;
+
+function toggleBlock(bodyId, caretId){
+  document.getElementById(bodyId).classList.toggle("hidden");
+  document.getElementById(caretId).classList.toggle("open");
+}
+
+function switchTab(tab){
+  currentTab = tab;
+  document.getElementById("tab-reviews").style.display = tab === "reviews" ? "" : "none";
+  document.getElementById("tab-meo").style.display = tab === "meo" ? "" : "none";
+  ["reviews", "meo"].forEach(t => {
+    const b = document.getElementById("tabBtn-" + t);
+    b.classList.toggle("active", t === tab);
+    b.setAttribute("aria-selected", t === tab ? "true" : "false");
+  });
+  if(tab === "meo" && !meo.loaded) meoLoad();
+  updateStat();
+}
+
+function updateStat(){
+  const num = document.getElementById("pendingCount");
+  const label = document.getElementById("statLabel");
+  if(currentTab === "meo"){
+    const weekAgo = Date.now() - 7 * 86400000;
+    const n = meo.posts.filter(p => p.status === "投稿済み" &&
+      new Date(String(p.createdAt).replace(" ", "T")).getTime() >= weekAgo).length;
+    num.textContent = n;
+    label.textContent = "直近7日の投稿";
+  } else {
+    num.textContent = reviews.filter(r => r.status !== "承認済み").length;
+    label.textContent = "未対応";
+  }
+}
+
+async function meoLoad(){
+  const err = document.getElementById("meoLoadError");
+  err.textContent = "";
+  if(GAS_API_URL.includes("ここに")){
+    err.textContent = "GAS_API_URL が未設定です。";
+    return;
+  }
+  try{
+    checkAuthStatus();
+    const res = await apiGet("meoGet");
+    if(res.error) throw new Error(res.error);
+    meo.settings = Object.assign({}, meo.settings, res.settings || {});
+    meo.photos = res.photos || [];
+    meo.posts = res.posts || [];
+    meo.loaded = true;
+    meoFillForm();
+    meoRenderAll();
+  }catch(e){
+    console.error(e);
+    document.getElementById("meoNext").style.display = "none";
+    err.textContent = "店舗投稿のデータを読み込めませんでした：" + (e.message || e) +
+      "（GASのコードを最新にして、新しいバージョンで再デプロイしたか確認してください）";
+  }
+}
+
+async function meoRefresh(){
+  const res = await apiGet("meoGet");
+  if(res.error) throw new Error(res.error);
+  meo.photos = res.photos || [];
+  meo.posts = res.posts || [];
+  meoRenderAll();
+}
+
+function meoRenderAll(){
+  meoRenderNext();
+  meoRenderPending();
+  meoRenderPhotos();
+  meoRenderHistory();
+  updateStat();
+}
+
+// ---------- 設定 ----------
+function meoFillForm(){
+  const s = meo.settings;
+  const sel = document.getElementById("meoHour");
+  if(!sel.options.length){
+    for(let h = 0; h < 24; h++){
+      const o = document.createElement("option");
+      o.value = String(h);
+      o.textContent = h + ":00";
+      sel.appendChild(o);
+    }
+  }
+  sel.value = String(s.hour);
+  document.querySelectorAll('input[name="meoMode"]').forEach(r => { r.checked = (r.value === s.mode); });
+  document.getElementById("meoLanguages").value = (s.languages || []).join("\n");
+  document.getElementById("meoShopNote").value = s.shopNote || "";
+  meoRenderChips();
+  meoRenderDays();
+}
+
+function meoSettingsChanged(){
+  const s = meo.settings;
+  s.hour = Number(document.getElementById("meoHour").value);
+  const m = document.querySelector('input[name="meoMode"]:checked');
+  s.mode = m ? m.value : "auto";
+  s.languages = document.getElementById("meoLanguages").value.split("\n").map(x => x.trim()).filter(Boolean);
+  s.shopNote = document.getElementById("meoShopNote").value;
+  meoRenderNext();
+  clearTimeout(meoSaveTimer);
+  meoSaveTimer = setTimeout(async () => {
+    const el = document.getElementById("meoSaveState");
+    try{
+      const res = await apiPost("meoSaveSettings", s);
+      if(res.error) throw new Error(res.error);
+      el.textContent = "保存しました";
+      el.style.color = "";
+    }catch(e){
+      el.textContent = "保存できませんでした";
+      el.style.color = "var(--err)";
+    }
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2000);
+  }, 700);
+}
+
+function meoRenderChips(){
+  const box = document.getElementById("meoKeywordChips");
+  const kws = meo.settings.keywords || [];
+  if(!kws.length){
+    box.innerHTML = '<span class="chips-empty">まだ指定ワードはありません</span>';
+    return;
+  }
+  box.innerHTML = kws.map((k, i) =>
+    `<span class="chip">${escapeHtml(k)}<button type="button" aria-label="${escapeHtml(k)}を削除" onclick="meoRemoveKeyword(${i})">×</button></span>`
+  ).join("");
+}
+
+function meoAddKeyword(){
+  const inp = document.getElementById("meoKeywordInput");
+  inp.value.split(/[、,，]/).map(x => x.trim()).filter(Boolean).forEach(k => {
+    if(!meo.settings.keywords.includes(k)) meo.settings.keywords.push(k);
+  });
+  inp.value = "";
+  meoRenderChips();
+  meoSettingsChanged();
+}
+
+function meoRemoveKeyword(i){
+  meo.settings.keywords.splice(i, 1);
+  meoRenderChips();
+  meoSettingsChanged();
+}
+
+function meoRenderDays(){
+  const days = meo.settings.days || [];
+  document.getElementById("meoDays").innerHTML = DAY_ORDER.map(d =>
+    `<button type="button" class="day-btn ${days.includes(d) ? "on" : ""}" aria-pressed="${days.includes(d)}" onclick="meoToggleDay(${d})">${DAY_NAMES[d]}</button>`
+  ).join("");
+  document.getElementById("meoDaysHint").textContent = "週" + days.length + "回";
+}
+
+function meoToggleDay(d){
+  const days = meo.settings.days;
+  const i = days.indexOf(d);
+  if(i >= 0) days.splice(i, 1); else days.push(d);
+  meoRenderDays();
+  meoSettingsChanged();
+}
+
+// ---------- 次回の予定 ----------
+function meoNextSlot(){
+  const s = meo.settings;
+  const now = new Date();
+  for(let i = 0; i < 8; i++){
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i, s.hour, 0, 0);
+    if(s.days.includes(d.getDay()) && d.getTime() > now.getTime()) return d;
+  }
+  return null;
+}
+
+function meoRenderNext(){
+  const el = document.getElementById("meoNext");
+  el.style.display = "";
+  const s = meo.settings;
+  const usable = meo.photos.filter(p => p.enabled).length;
+  let warn = "";
+  if(!usable) warn = "投稿に使える写真がありません。下の「写真ライブラリ」から追加してください。";
+  else if(!s.days.length) warn = "投稿する曜日が選ばれていません。";
+  if(warn){
+    el.className = "meo-next warn";
+    el.innerHTML = `<span class="big">自動投稿は止まっています</span><span class="sub">${escapeHtml(warn)}</span>`;
+    return;
+  }
+  const d = meoNextSlot();
+  const when = d ? `${d.getMonth() + 1}/${d.getDate()}（${DAY_NAMES[d.getDay()]}）${s.hour}:00ごろ` : "—";
+  const days = DAY_ORDER.filter(x => s.days.includes(x)).map(x => DAY_NAMES[x]).join("・");
+  const how = s.mode === "review" ? "下書きを作って承認待ち" : "確認なしで自動投稿";
+  el.className = "meo-next";
+  el.innerHTML = `<span class="big">次の投稿：${when}</span>` +
+    `<span class="sub">週${s.days.length}回（${days}）・${how}・使える写真${usable}枚${s.keywords.length ? "" : "・指定ワード未設定"}</span>`;
+}
+
+// ---------- 投稿文カード（ためし作成・承認待ちで共通） ----------
+function photoById(id){ return meo.photos.find(x => x.photoId === id); }
+
+function meoMissing(text){
+  const t = String(text || "").toLowerCase();
+  return (meo.settings.keywords || []).filter(k => k && !t.includes(String(k).toLowerCase()));
+}
+
+function postCardHtml(p, kind){
+  const id = p.postId;
+  const ph = photoById(p.photoId);
+  const img = ph ? `<img src="${escapeHtml(ph.thumbUrl)}" alt="${escapeHtml(ph.description || "投稿に使う写真")}">` : "";
+  const buttons = kind === "pending"
+    ? `<button class="btn-primary btn-approve" id="pbtn-${id}" onclick="meoApprove('${id}')">承認して投稿</button>
+       <button class="btn-text" onclick="meoDiscard('${id}')">この下書きを破棄</button>`
+    : `<button class="btn-primary btn-approve" id="pbtn-${id}" onclick="meoPostPreview()">この内容で今すぐ投稿</button>
+       <button class="btn-text" onclick="meoPreview()">作り直す</button>
+       <button class="btn-text" onclick="meoClosePreview()">閉じる</button>`;
+  return `<div class="post-card">
+    ${img}
+    <div class="pc-text">
+      <textarea id="ptext-${id}" aria-label="投稿文" oninput="meoCheckText('${id}')">${escapeHtml(p.text)}</textarea>
+      <div class="charcount" id="pcount-${id}"></div>
+      <div class="error-msg" id="pwarn-${id}"></div>
+      <div class="row-btns">${buttons}</div>
+      <div class="error-msg" id="perr-${id}"></div>
+    </div>
+  </div>`;
+}
+
+function meoCheckText(id){
+  const ta = document.getElementById("ptext-" + id);
+  if(!ta) return;
+  const t = ta.value;
+  const cnt = document.getElementById("pcount-" + id);
+  cnt.textContent = t.length.toLocaleString() + " / " + POST_LIMIT.toLocaleString() + "文字";
+  cnt.classList.toggle("over", t.length > POST_LIMIT);
+  const miss = meoMissing(t);
+  document.getElementById("pwarn-" + id).textContent = miss.length ? "指定ワードが入っていません：" + miss.join("、") : "";
+  const btn = document.getElementById("pbtn-" + id);
+  if(btn) btn.disabled = !t.trim() || t.length > POST_LIMIT || miss.length > 0;
+}
+
+function meoRenderPending(){
+  const box = document.getElementById("meoPendingBox");
+  const list = meo.posts.filter(p => p.status === "承認待ち");
+  if(!list.length){ box.style.display = "none"; return; }
+  box.style.display = "";
+  document.getElementById("meoPending").innerHTML = list.map(p => postCardHtml(p, "pending")).join("");
+  list.forEach(p => meoCheckText(p.postId));
+}
+
+async function meoApprove(id){
+  const text = document.getElementById("ptext-" + id).value;
+  if(!confirm("この内容でGoogleマップに店舗投稿します。よろしいですか？")) return;
+  const btn = document.getElementById("pbtn-" + id);
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>投稿中...';
+  const errEl = document.getElementById("perr-" + id);
+  errEl.textContent = "";
+  try{
+    const res = await apiPost("meoApprove", { postId: id, text });
+    if(res.authUrl){
+      showAuthBanner(res.authUrl);
+      throw new Error("Googleの認証が切れています。上のリンクから再認証してください");
+    }
+    if(res.error) throw new Error(res.error);
+    try{ await meoRefresh(); }catch(_){ /* 投稿自体は成功しているので再読み込みの失敗は無視 */ }
+  }catch(e){
+    errEl.textContent = "エラー：" + (e.message || e);
+    btn.innerHTML = orig;
+    meoCheckText(id);
+  }
+}
+
+async function meoDiscard(id){
+  if(!confirm("この下書きを破棄します。よろしいですか？")) return;
+  try{
+    const res = await apiPost("meoDiscard", { postId: id });
+    if(res.error) throw new Error(res.error);
+    await meoRefresh();
+  }catch(e){
+    document.getElementById("perr-" + id).textContent = "エラー：" + (e.message || e);
+  }
+}
+
+// ---------- ためし作成 ----------
+async function meoPreview(){
+  const btn = document.getElementById("meoPreviewBtn");
+  const orig = btn.innerHTML;
+  const area = document.getElementById("meoPreviewArea");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>作成中（30秒ほどかかります）...';
+  area.innerHTML = "";
+  try{
+    const res = await apiPost("meoPreview", {});
+    if(res.error) throw new Error(res.error);
+    meoPreviewData = { postId: "preview", text: res.text, photoId: res.photoId };
+    area.innerHTML = postCardHtml(meoPreviewData, "preview");
+    meoCheckText("preview");
+  }catch(e){
+    area.innerHTML = `<div class="error-msg">エラー：${escapeHtml(e.message || String(e))}</div>`;
+  }finally{
+    btn.disabled = false;
+    btn.innerHTML = orig;
+  }
+}
+
+function meoClosePreview(){
+  meoPreviewData = null;
+  document.getElementById("meoPreviewArea").innerHTML = "";
+}
+
+async function meoPostPreview(){
+  if(!meoPreviewData) return;
+  const text = document.getElementById("ptext-preview").value;
+  if(!confirm("この内容でGoogleマップに店舗投稿します。よろしいですか？\n（投稿後の取り消しは、Googleビジネスプロフィール側で行います）")) return;
+  const btn = document.getElementById("pbtn-preview");
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>投稿中...';
+  const errEl = document.getElementById("perr-preview");
+  errEl.textContent = "";
+  try{
+    const res = await apiPost("meoPostNow", { text, photoId: meoPreviewData.photoId });
+    if(res.authUrl){
+      showAuthBanner(res.authUrl);
+      throw new Error("Googleの認証が切れています。上のリンクから再認証してください");
+    }
+    if(res.error) throw new Error(res.error);
+    meoPreviewData = null;
+    document.getElementById("meoPreviewArea").innerHTML = '<div class="notice-msg">投稿しました。下の「投稿の履歴」で確認できます。</div>';
+    try{ await meoRefresh(); }catch(_){ /* 無視 */ }
+  }catch(e){
+    errEl.textContent = "エラー：" + (e.message || e);
+    btn.innerHTML = orig;
+    meoCheckText("preview");
+  }
+}
+
+// ---------- 写真ライブラリ ----------
+function photoCardHtml(p){
+  const id = p.photoId;
+  return `<div class="photo-card ${p.enabled ? "" : "off"}" id="photo-${id}">
+    <img src="${escapeHtml(p.thumbUrl)}" loading="lazy" alt="${escapeHtml(p.description || "登録した写真")}">
+    <div class="pc-body">
+      <textarea aria-label="写真の説明" placeholder="写真の説明（AIが写真を選ぶ手がかりになります）" onchange="meoPhotoEdit('${id}','description',this.value)">${escapeHtml(p.description)}</textarea>
+      <input type="text" aria-label="タグ" placeholder="タグ（カンマ区切り）" value="${escapeHtml(p.tags)}" onchange="meoPhotoEdit('${id}','tags',this.value)">
+      <div class="pc-row">
+        <label class="pc-use"><input type="checkbox" ${p.enabled ? "checked" : ""} onchange="meoPhotoToggle('${id}', this.checked)"> 投稿に使う</label>
+        <span>使用 ${p.useCount}回</span>
+      </div>
+      <div class="pc-actions">
+        <button class="btn-text" onclick="meoPhotoRedescribe('${id}', this)">AIで説明を作り直す</button>
+        <button class="btn-text" style="color:var(--stamp);" onclick="meoPhotoDelete('${id}')">削除</button>
+      </div>
+      <div class="error-msg" id="photoerr-${id}"></div>
+    </div>
+  </div>`;
+}
+
+function meoRenderPhotos(){
+  document.getElementById("meoPhotoTitle").textContent = "写真ライブラリ（" + meo.photos.length + "枚）";
+  const grid = document.getElementById("meoPhotoGrid");
+  if(!meo.photos.length){
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">まだ写真がありません。「写真を追加」から登録してください。</div>';
+    return;
+  }
+  grid.innerHTML = meo.photos.slice().reverse().map(photoCardHtml).join("");
+}
+
+function photoErr(id, msg){
+  const el = document.getElementById("photoerr-" + id);
+  if(el) el.textContent = msg ? "エラー：" + msg : "";
+}
+
+async function meoPhotoEdit(id, field, value){
+  const p = meo.photos.find(x => x.photoId === id);
+  if(!p) return;
+  p[field] = value;
+  photoErr(id, "");
+  try{
+    const res = await apiPost("meoUpdatePhoto", { photoId: id, [field]: value });
+    if(res.error) throw new Error(res.error);
+  }catch(e){
+    photoErr(id, "保存できませんでした：" + (e.message || e));
+  }
+}
+
+async function meoPhotoToggle(id, checked){
+  const p = meo.photos.find(x => x.photoId === id);
+  if(!p) return;
+  p.enabled = checked;
+  const card = document.getElementById("photo-" + id);
+  if(card) card.classList.toggle("off", !checked);
+  meoRenderNext();
+  try{
+    const res = await apiPost("meoUpdatePhoto", { photoId: id, enabled: checked });
+    if(res.error) throw new Error(res.error);
+  }catch(e){
+    photoErr(id, "保存できませんでした：" + (e.message || e));
+  }
+}
+
+async function meoPhotoDelete(id){
+  if(!confirm("この写真を削除します（Googleドライブのファイルもゴミ箱に入ります）。よろしいですか？")) return;
+  try{
+    const res = await apiPost("meoDeletePhoto", { photoId: id });
+    if(res.error) throw new Error(res.error);
+    meo.photos = meo.photos.filter(x => x.photoId !== id);
+    meoRenderAll();
+  }catch(e){
+    photoErr(id, e.message || String(e));
+  }
+}
+
+async function meoPhotoRedescribe(id, btn){
+  const orig = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "解析中...";
+  photoErr(id, "");
+  try{
+    const res = await apiPost("meoRedescribePhoto", { photoId: id });
+    if(res.error) throw new Error(res.error);
+    const i = meo.photos.findIndex(x => x.photoId === id);
+    if(i >= 0) meo.photos[i] = res.photo;
+    meoRenderPhotos();
+  }catch(e){
+    btn.disabled = false;
+    btn.textContent = orig;
+    photoErr(id, e.message || String(e));
+  }
+}
+
+// 画像を長辺1600pxのJPEGに縮小する（アップロードを軽くし、Googleの写真条件にも合わせる）
+function resizeImage(file, maxSide, quality){
+  maxSide = maxSide || 1600;
+  quality = quality || 0.85;
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      try{
+        const w = img.naturalWidth, h = img.naturalHeight;
+        if(Math.min(w, h) < 300 || Math.max(w, h) < 400){
+          URL.revokeObjectURL(url);
+          return reject(new Error("画像が小さすぎます（横400×縦300px以上が必要です）"));
+        }
+        const scale = Math.min(1, maxSide / Math.max(w, h));
+        const cw = Math.round(w * scale), ch = Math.round(h * scale);
+        const canvas = document.createElement("canvas");
+        canvas.width = cw;
+        canvas.height = ch;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, cw, ch);
+        ctx.drawImage(img, 0, 0, cw, ch);
+        const dataUrl = canvas.toDataURL("image/jpeg", quality);
+        URL.revokeObjectURL(url);
+        resolve(dataUrl.split(",")[1]);
+      }catch(e){
+        URL.revokeObjectURL(url);
+        reject(e);
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("画像を読み込めませんでした（HEIC形式の場合は、JPEGで保存し直してください）"));
+    };
+    img.src = url;
+  });
+}
+
+async function meoUploadFiles(fileList){
+  const files = Array.from(fileList || []).filter(f => f.type.startsWith("image/") || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name));
+  const input = document.getElementById("meoFileInput");
+  if(!files.length){ input.value = ""; return; }
+  const status = document.getElementById("meoUploadStatus");
+  const errBox = document.getElementById("meoUploadErrors");
+  const prog = document.getElementById("meoProg");
+  const bar = document.getElementById("meoProgBar");
+  prog.style.display = "";
+  bar.style.width = "0";
+  errBox.innerHTML = "";
+  const errors = [];
+  const warnings = [];
+  let ok = 0;
+  for(let i = 0; i < files.length; i++){
+    const f = files[i];
+    status.textContent = `写真を登録中… ${i + 1} / ${files.length}（AIが写真の内容を解析しています）`;
+    try{
+      const base64 = await resizeImage(f);
+      const res = await apiPost("meoUploadPhoto", { fileName: f.name, mimeType: "image/jpeg", dataBase64: base64 });
+      if(res.error) throw new Error(res.error);
+      meo.photos.push(res.photo);
+      if(res.warning) warnings.push(f.name + "：" + res.warning);
+      ok++;
+      meoRenderPhotos();
+      meoRenderNext();
+    }catch(e){
+      errors.push(f.name + "：" + (e.message || e));
+    }
+    bar.style.width = Math.round(((i + 1) / files.length) * 100) + "%";
+  }
+  status.textContent = `${ok}枚を登録しました。` + (errors.length ? `${errors.length}枚は登録できませんでした。` : "");
+  const lines = errors.concat(warnings);
+  errBox.innerHTML = lines.map(l => escapeHtml(l)).join("<br>");
+  setTimeout(() => { prog.style.display = "none"; }, 1200);
+  input.value = "";
+}
+
+// ---------- 履歴 ----------
+function meoRenderHistory(){
+  const box = document.getElementById("meoHistory");
+  const list = meo.posts.filter(p => p.status !== "承認待ち").slice(0, 20);
+  if(!list.length){
+    box.innerHTML = '<div class="empty-state">まだ投稿はありません</div>';
+    return;
+  }
+  box.innerHTML = list.map(p => {
+    const ph = photoById(p.photoId);
+    const first = (p.text || "").split("\n").find(l => l.trim()) || "";
+    const thumb = ph ? `<img src="${escapeHtml(ph.thumbUrl)}" alt="" loading="lazy">` : '<div class="noimg"></div>';
+    const body = p.text
+      ? `<details><summary class="hist-text">${escapeHtml(first.slice(0, 60))}${first.length > 60 ? "…" : ""}</summary><div class="hist-text" style="margin-top:6px;">${escapeHtml(p.text)}</div></details>`
+      : "";
+    return `<div class="hist-item">${thumb}<div class="hist-main">
+      <div class="hist-top"><span class="status-badge status-${escapeHtml(p.status)}">${escapeHtml(p.status)}</span>
+      <span class="notes-hint">${escapeHtml(p.createdAt)} ・ ${escapeHtml(p.source || "")}</span></div>
+      ${body}
+      ${p.error ? `<div class="error-msg">${escapeHtml(p.error)}</div>` : ""}
+    </div></div>`;
+  }).join("");
 }
 
 loadAll();
